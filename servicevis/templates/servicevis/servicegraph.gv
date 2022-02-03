@@ -1,0 +1,58 @@
+digraph "services" {
+	graph [	
+     	        fontname = "Helvetica-Oblique",
+		fontsize = 30, style=bold
+		size = "10,8" ];
+	node [	shape = oval,
+		fontsize = 15,
+		lwidth = 5,
+		color = gray,
+		penwidth = 5,
+		fontname = "Helvetica-Outline" ];
+	edge [ penwidth = 3];
+        
+        subgraph cluster_{{graph.name}} {
+        graph [color=black, label="{{graph.name}}"];
+        {% for s in graph.services %}
+          {% if mode == "doc" %} {{s.doc_gv|safe}} 
+          {% elif mode == "trace" %} {{s.trace_gv|safe}} 
+          {% elif mode == "edit" %} {{s.edit_gv|safe}} 
+          {% else %} {{s.doc_gv|safe}} {% endif %}
+        {% endfor %}
+
+
+       }
+        
+        # dependent and supported subgraphs
+        {% for g, slist in requires.items %}
+          subgraph cluster_{{g.name}} {
+          graph [color=gray, style=none, label="{{g.name}}", URL="/services/show/{{g.pk}}/svg?mode={{mode}}"];
+          {% for s in slist %}
+          {% if mode == "doc" %} {{s.doc_gv|safe}} 
+          {% elif mode == "trace" %} {{s.trace_gv|safe}} 
+          {% elif mode == "edit" %} {{s.edit_gv|safe}} 
+          {% else %} {{s.doc_gv|safe}} {% endif %}
+          {% endfor %}
+          }
+        {% endfor %}
+       
+         #links for the main graph
+         {% for s in graph.services %}
+        {% for l in s.links %}
+          {% if mode == "doc" %} {{l.doc_gv|safe}}
+          {% elif mode == "trace" %} {{l.trace_gv|safe}}
+          {% elif mode == "edit" %} {{l.edit_gv|safe}}
+          {% else %} {{l.trace_gv|safe}} {% endif %}
+        {%endfor%}
+        {% endfor %}
+
+        # links for the supported sub graphs
+        {% for l in extralinks %}
+          {% if mode == "doc" %} {{l.doc_gv|safe}}
+          {% elif mode == "trace" %} {{l.trace_gv|safe}}
+          {% elif mode == "edit" %} {{l.edit_gv|safe}}
+          {% else %} {{l.trace_gv|safe}} {% endif %}
+        {%endfor%}
+
+ }
+ 

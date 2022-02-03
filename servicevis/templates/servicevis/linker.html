@@ -1,0 +1,18 @@
+<html>
+
+<body>
+<h1>{{service}}</h1>
+
+<p><a href="/services/show/{{service.graph.pk}}/svg?mode=edit">show graph</a></p>
+<p><a href="/admin/servicevis/service/{{service.pk}}">edit service attribs</a></p>
+<p>Current links:</p>
+
+{% for l in current_links %}<p> -> {{l.dependency}} <a href="?del={{l.pk}}">Delete dependency</a></p>
+{% endfor %}
+
+<p>Add dependency</p>
+{% for s in choices %} <a href="?add={{s.pk}}">{{s.name}}</a>{% endfor %}
+
+
+</body>
+</html>

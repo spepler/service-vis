@@ -1,0 +1,24 @@
+digraph "services" {
+	graph [	
+     	        fontname = "Helvetica-Oblique",
+		fontsize = 30,
+		label = "Data centre Services",
+		size = "10,8" ];
+	node [	shape = oval,
+		fontsize = 15,
+		color = gray,
+		fontname = "Helvetica-Outline" ];
+        
+
+        {% for s in services %}
+          {{s.doc_gv|safe}}
+        {% endfor %}
+
+
+        # links for the supported sub graphs
+        {% for l in links %}
+          {{l.trace_gv|safe}}
+        {%endfor%}
+
+ }
+ 

@@ -1,0 +1,16 @@
+<html>
+
+<body>
+<h1>Hi</h1>
+
+<p>Current mode: {{mode}}
+
+<a href="/services/show/{{graph}}/svg?mode=edit"> Edit</a>
+<a href="/services/show/{{graph}}/svg?mode=doc"> Op manual</a>
+<a href="/services/show/{{graph}}/svg?mode=trace"> Trace</a>
+<a href="/services/add/{{graph}}">Add to this graph</a>
+</p>
+
+{{svg|safe}}
+</body>
+</html>
